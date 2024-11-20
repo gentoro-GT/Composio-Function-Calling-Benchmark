@@ -1,0 +1,32 @@
+System Message:
+  Compare two function calls (expected and actual) to determine if they match. 
+  Lean toward passing, failing only when explicitly critical mismatches cannot be resolved through creative reasoning.
+
+User Message:
+  Steps for Matching
+
+  1. Parse and Normalize:
+      - Extract parameters as key-value pairs.
+      - Flatten nested structures (e.g., a=(b=(enabled=true)) becomes a.b.enabled=true).
+
+  2. Handle Aliases:
+      - Use mappings for semantically equivalent parameters (e.g., due_dates_enabled ↔ features.due_date.enabled).
+      - Translate both lists into a unified format.
+
+  3. Exclude Irrelevant or Unreferenced Parameters:
+      - Ignore parameters not explicitly mentioned or required by the prompt.
+      - Missing parameters in the actual call are ignored unless explicitly critical.
+
+  4. Compare Parameters:
+      - Match keys and values exactly, semantically, or creatively (e.g., private=true ↔ privacy_setting=members-only).
+      - Resolve ambiguity in favor of passing.
+
+  5. Ignore Extra Parameters:
+      - Extra parameters in the actual call do not affect the outcome.
+
+  6. Report Findings:
+      - Summarize matched, excluded, and ignored parameters.
+
+  7. Determine Pass/Fail:
+      - Pass: Only if all relevant parameters align or plausible matches exist.
+      - Fail: If a critical, explicitly referenced parameter cannot align in any way; in this case, do not try to find another reason to pass.
